@@ -1,7 +1,7 @@
 /*#include "Character.h"
 
 Characterx::Characterx(string description) {
-	this->description = description;
+    this->description = description;
 }
 void Characterx::addItem(Item &item) {
     itemsInCharacter.push_back(item);
