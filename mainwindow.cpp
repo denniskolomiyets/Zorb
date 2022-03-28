@@ -20,10 +20,6 @@ void MainWindow::on_pushButton_3_clicked() //North
     ui->outputLabel->setText(QString::fromStdString(zorkUL.goRoom("north")));
 }
 
-void MainWindow::setText(QString str){
-
-    QString newString = str;
-}
 
 
 void MainWindow::on_pushButton_clicked()//west

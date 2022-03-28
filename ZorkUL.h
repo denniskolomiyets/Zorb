@@ -2,9 +2,8 @@
 #define ZORKUL_H_
 
 #include <QString>
-#include "command.h"
-#include "Parser.h"
 #include "Room.h"
+#include "wordle.h"
 #include "item.h"
 #include <iostream>
 #include <string>
@@ -12,7 +11,6 @@ using namespace std;
 
 class ZorkUL {
 private:
-    Parser parser;
     Room *currentRoom;
     void createRooms();
     void printWelcome();
