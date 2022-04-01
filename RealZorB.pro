@@ -12,15 +12,13 @@ SOURCES += \
     Room.cpp \
     ZorkUL.cpp \
     item.cpp \
-    mainwindow.cpp \
-    wordle.cpp
+    mainwindow.cpp
 
 HEADERS += \
     Room.h \
     ZorkUL.h \
     item.h \
-    mainwindow.h \
-    wordle.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui
@@ -29,3 +27,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    homeImage.jpg
