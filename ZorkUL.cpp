@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "mainwindow.h""
+#include "mainwindow.h"
 
 
 using namespace std;
@@ -8,8 +8,8 @@ using namespace std;
 #include <QApplication>
 
 //global variables
-bool hasPowers = false; //allows you to pick up key
-bool hasKey = false; //allows you to open the door
+
+Room *a, *b, *c, *d, *e, *f, *g, *h, *i;
 
 
 int main(int argc, char *argv[]) {
@@ -24,7 +24,7 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
-    Room *a, *b, *c, *d, *e, *f, *g, *h, *i;
+
 
     a = new Room("Centre"); // middle
     b = new Room("East");
@@ -32,7 +32,7 @@ void ZorkUL::createRooms()  {
     d = new Room("South");
     e = new Room("Door"); // door / escape
     f = new Room("North");
-    g = new Room("North-East");
+    g = new Room("North-East"); //wordle puzzle
     h = new Room("North-West");
     i = new Room("key");
         i->addItem(new Item("key", 1, 11));
@@ -51,14 +51,15 @@ void ZorkUL::createRooms()  {
         currentRoom = a;
 }
 
-
+string ZorkUL::getRoom(){
+    return currentRoom->shortDescription();
+}
 void ZorkUL::printWelcome() {
     cout << "start"<< endl;
     cout << "info for help"<< endl;
     cout << endl;
     cout << currentRoom->longDescription() << endl;
 }
-
 
 string ZorkUL::goRoom(string dir) {
     // Try to leave current room.

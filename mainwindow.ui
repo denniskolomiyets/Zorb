@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>818</width>
+    <height>827</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>380</y>
+      <x>310</x>
+      <y>610</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>460</y>
+      <x>430</x>
+      <y>690</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>300</y>
+      <x>430</x>
+      <y>530</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>380</y>
+      <x>550</x>
+      <y>610</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -69,8 +69,8 @@
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>380</y>
+      <x>430</x>
+      <y>610</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -82,23 +82,39 @@
    <widget class="QLabel" name="outputLabel">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>280</y>
+      <x>10</x>
+      <y>510</y>
       <width>311</width>
-      <height>261</height>
+      <height>181</height>
      </rect>
     </property>
     <property name="text">
      <string>You have been trapped in a ZORB ball. Escape.   </string>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QLabel" name="image_label">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>20</y>
+      <y>90</y>
       <width>731</width>
-      <height>261</height>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>710</y>
+      <width>271</width>
+      <height>24</height>
      </rect>
     </property>
    </widget>
@@ -108,7 +124,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>818</width>
      <height>21</height>
     </rect>
    </property>
