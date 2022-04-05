@@ -12,6 +12,7 @@ using namespace std;
 Room *a, *b, *c, *d, *e, *f, *g, *h, *i;
 
 
+
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
@@ -63,7 +64,7 @@ void ZorkUL::printWelcome() {
 
 string ZorkUL::goRoom(string dir) {
     // Try to leave current room.
-    Room* nextRoom = currentRoom->nextRoom(dir);
+    Room* nextRoom = setRoom(dir);
 
     if (nextRoom == NULL)
         return "No exit this way";
@@ -72,5 +73,13 @@ string ZorkUL::goRoom(string dir) {
         currentRoom = nextRoom;
         return currentRoom->longDescription();
     }
+
 }
+
+inline Room* ZorkUL::setRoom(string dir) {  //inline Function :)
+    Room* newRoom = currentRoom->nextRoom(dir);
+    return newRoom;
+}
+
+
 

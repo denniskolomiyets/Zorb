@@ -30,3 +30,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     homeImage.jpg
+
+
+RESOURCES += \
+    resources.qrc

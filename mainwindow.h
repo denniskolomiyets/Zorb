@@ -19,7 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void updateText(QString str);
-    void updateGrapics();
+
 
 
 
@@ -34,6 +34,7 @@ private slots:
 
     void on_pushButton_5_clicked();
 
+    void updateGraphics();
 
     void on_lineEdit_textChanged(const QString &arg1);
 
@@ -44,11 +45,13 @@ private:
     bool hasKey = false; //allows you to open the door
     bool hasLookedAtKey = false; //if enabled will allow you to play the puzzle
     bool wordleGameWon = false;
+    bool gameWon = false;
     int attempts = 0;
 
 protected:
     Ui::MainWindow *ui;
     ZorkUL zorkUL;
 };
+
 
 #endif // MAINWINDOW_H
