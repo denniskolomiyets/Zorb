@@ -85,11 +85,15 @@
       <x>10</x>
       <y>510</y>
       <width>311</width>
-      <height>181</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="text">
-     <string>You have been trapped in a ZORB ball. Escape.   </string>
+     <string>You wake up unable to remember anything.
+The cold ground sets you into action.
+You attempt to gain balance and look around.
+
+There are doors in every direction.</string>
     </property>
    </widget>
    <widget class="QLabel" name="image_label">
@@ -111,8 +115,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>710</y>
+      <x>20</x>
+      <y>730</y>
       <width>271</width>
       <height>24</height>
      </rect>

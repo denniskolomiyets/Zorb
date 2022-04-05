@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file>images/homeImage.jpg</file>
+        <file>images/centre.png</file>
+        <file>images/door.png</file>
+        <file>images/east.png</file>
+        <file>images/hintroom.png</file>
+        <file>images/keypad.png</file>
+        <file>images/north.png</file>
+        <file>images/out.png</file>
+        <file>images/safe.png</file>
+        <file>images/south.png</file>
+        <file>images/west.png</file>
+    </qresource>
+</RCC>

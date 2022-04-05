@@ -8,7 +8,7 @@
 #include <string>
 #include "mainwindow.h"
 
-using namespace std;
+using namespace std;//namespace
 
 class ZorkUL {
 private:
@@ -16,9 +16,9 @@ private:
     void printWelcome();
 //    bool processCommand(Command command);
     void printHelp();
-
     void createItems();
     void displayItems();
+     Room* setRoom(string dir);
 
 protected:
     Room *currentRoom;
@@ -28,6 +28,7 @@ public:
     void play();
     string goRoom(string dir);
     string go(string direction);
+
     string getRoom();
 };
 
