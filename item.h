@@ -8,6 +8,7 @@ using namespace std;
 
 class Item {
 private:
+    Item *mug;
     string description;
     string longDescription;
     int weightGrams;
@@ -15,8 +16,10 @@ private:
     bool weaponCheck;
 
 public:
+    Item ();
     Item (string description, int inWeight, float inValue);
     Item (string description);
+    ~Item();
     string getShortDescription();
     string getLongDescription();
     int getWeight();

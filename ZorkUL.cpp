@@ -9,7 +9,7 @@ using namespace std;
 
 //global variables
 
-Room *a, *b, *c, *d, *e, *f, *g, *h, *i;
+Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
 
 
@@ -36,11 +36,12 @@ void ZorkUL::createRooms()  {
     g = new Room("North-East"); //wordle puzzle
     h = new Room("North-West");
     i = new Room("key");
-        i->addItem(new Item("key", 1, 11));
+        i->addItem(new Item("key"));
+    j = new Room("Tunnel");
 
 //             (N, E, S, W)
     a->setExits(f, b, d, c);
-    b->setExits(NULL, NULL, NULL, a);
+    b->setExits(NULL, j, NULL, a);
     c->setExits(NULL, a, NULL, NULL);
     d->setExits(a, e, NULL, i);
     e->setExits(NULL, NULL, NULL, d);
@@ -48,6 +49,7 @@ void ZorkUL::createRooms()  {
     g->setExits(NULL, NULL, NULL, f);
     h->setExits(NULL, f, NULL, NULL);
     i->setExits(NULL, d, NULL, NULL);
+    j->setExits(NULL, NULL, NULL, b);
 
         currentRoom = a;
 }
@@ -66,6 +68,7 @@ string ZorkUL::goRoom(string dir) {
     // Try to leave current room.
     Room* nextRoom = setRoom(dir);
 
+
     if (nextRoom == NULL)
         return "No exit this way";
 
@@ -76,10 +79,14 @@ string ZorkUL::goRoom(string dir) {
 
 }
 
-inline Room* ZorkUL::setRoom(string dir) {  //inline Function :)
+
+inline Room* ZorkUL::setRoom(string dir) {  //inline Function
     Room* newRoom = currentRoom->nextRoom(dir);
     return newRoom;
 }
 
+void ZorkUL::resetRoom() {
+    currentRoom = a;
+}
 
 
