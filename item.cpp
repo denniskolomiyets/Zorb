@@ -1,5 +1,9 @@
 #include "item.h"
 
+Item::Item () {
+    description = "Boss's Mug";
+}
+
 Item::Item (string inDescription, int inWeightGrams, float inValue) {
     description = inDescription;
     setWeight(inWeightGrams);
@@ -10,6 +14,8 @@ Item::Item (string inDescription, int inWeightGrams, float inValue) {
 Item::Item(string inDescription) {
     description = inDescription;
 }
+
+
 
 void Item::setWeight(int inWeightGrams)
 {
@@ -38,3 +44,6 @@ string Item::getLongDescription()
     return " item(s), " + description + ".\n";
 }
 
+Item::~Item(){ //destructor
+    delete mug;
+}

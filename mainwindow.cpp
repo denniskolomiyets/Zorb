@@ -1,23 +1,66 @@
 #include "mainwindow.h"
 #include "ZorkUL.h"
 #include "item.h"
+#include <fstream>
+#include "derived.h"
 #include "ui_mainwindow.h"
 #include <QPixmap>
-//global
-string word = "COLOR";
+//global variables
+    const int MAX = 4;
+    string arrayOfWords[MAX]; //array of wordle answers
+    string *ptr[MAX]; //array of pointers
+    string word = "";
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+
+
     ui->setupUi(this);
     ui->image_label->setScaledContents(true);
     QPixmap pic1(":/resources/images/centre.png");
     ui->lineEdit->setVisible(false);
+    ui->dilemaButton1->setVisible(false);
+    ui->dilemaButton2->setVisible(false);
     ui->image_label->setPixmap(pic1);
+
+    ofstream writeFile("answers.txt");
+
+     // Writes words to the file
+     writeFile << "COLOR" << endl;
+     writeFile << "CHIEF" << endl;
+     writeFile << "METRO" << endl;
+     writeFile << "FALSE" << endl;
+     // Close the file
+     writeFile.close();
+
+     string temp;
+
+     // Read from the text file
+     ifstream readFile("answers.txt");
+
+     // Use a while loop together with the getline() function to read the file line by line
+     int j=0;
+     while (getline (readFile, temp)) {
+        arrayOfWords[j] = temp;
+        j++;
+    }
+    readFile.close();
+
+
+    for (int i = 0; i < MAX; i++) {
+          ptr[i] = &arrayOfWords[i]; // assigns the address of integer, use of reference
+       }
+     word = *ptr[0];
+
+     flags = !flags;
 }
 
-MainWindow::~MainWindow()
+MainWindow::~MainWindow() //destructor
 {
     delete ui;
 }
@@ -25,7 +68,7 @@ MainWindow::~MainWindow()
 //Buttons
 void MainWindow::on_pushButton_3_clicked() //North
 {
-    if(!gameWon){
+    if(!flags.gameWon){
         zorkUL.goRoom("north");
         updateGraphics();
     }
@@ -36,16 +79,21 @@ void MainWindow::on_pushButton_3_clicked() //North
 
 void MainWindow::on_pushButton_clicked()//west
 {
-    if(!gameWon){
+    if(!flags.gameWon){
+        if(zorkUL.getRoom() == "Tunnel"){
+            ui->dilemaButton1->setVisible(false);
+            ui->dilemaButton2->setVisible(false);
+        }
         zorkUL.goRoom("west");
         updateGraphics();
     }
+
 }
 
 
 void MainWindow::on_pushButton_4_clicked() //east
 {
-    if(!gameWon){
+    if(!flags.gameWon){
         zorkUL.goRoom("east");
         updateGraphics();
     }
@@ -54,7 +102,7 @@ void MainWindow::on_pushButton_4_clicked() //east
 
 void MainWindow::on_pushButton_2_clicked() //south
 {
-    if(!gameWon){
+    if(!flags.gameWon){
         zorkUL.goRoom("south");
         updateGraphics();
     }
@@ -73,7 +121,7 @@ void MainWindow::updateGraphics(){
     }
     else if(zorkUL.getRoom() == "East"){
         QPixmap pic(":/resources/images/east.png");
-        ui->outputLabel->setText(QString::fromStdString("This door reveals a deep dark tunnel leading you.. \nSomewhere\nThere a bit of natural light seeping through \nthe cracks\nEven I'm too scared to go there.. \n\nTurn around"));
+        ui->outputLabel->setText(QString::fromStdString("This door reveals a deep dark tunnel leading you.. \nSomewhere\nThere a bit of natural light seeping through \nthe cracks\nEven I'm too scared to go there.. \n\nTurn around.. or go on"));
         ui->image_label->setPixmap(pic);
     }
     else if(zorkUL.getRoom() == "North"){
@@ -106,48 +154,83 @@ void MainWindow::updateGraphics(){
         ui->outputLabel->setText(QString::fromStdString("There's a large mechanical door in this dim room\n\nCould it lead to escape"));
         ui->image_label->setPixmap(pic);
     }
+    else if(zorkUL.getRoom() == "Tunnel") {
+        derived d;
+        QPixmap pic(":/images/dark screen.jpeg");
+        ui->outputLabel->setText(QString::fromStdString(d.figure())); //calling virtual function
+        ui->image_label->setPixmap(pic);
+
+    }
 }
 
 
 
 void MainWindow::on_pushButton_5_clicked() //interact button
 {
-    if(zorkUL.getRoom() == "North-East" && !hasCode && hasLookedAtKey) {
+    if(zorkUL.getRoom() == "North-East" && !flags.hasCode && flags.hasLookedAtKey) {
         ui->lineEdit->setVisible(true);
         if(attempts > 5){
             attempts = 0;
         }
         ui->outputLabel->setText(QString::fromStdString("Please enter a 5 letter word\nYou have 6 attempts."));
     }
-    else if(zorkUL.getRoom() == "North-East" && !hasCode && !hasLookedAtKey){
-        ui->outputLabel->setText(QString::fromStdString("Its a Keypad with Letters and a screen."));
+    else if(zorkUL.getRoom() == "North-East" && !flags.hasCode && !flags.hasLookedAtKey){
+        ui->outputLabel->setText(QString::fromStdString("Its a Keypad with Letters and a screen.\n\nExit is west."));
     }
-    else if(zorkUL.getRoom() == "key" && !hasCode ) {
+    else if(zorkUL.getRoom() == "key" && !flags.hasCode ) {
         ui->outputLabel->setText(QString::fromStdString("There is a key in a glass safe. It is locked"));
-        hasLookedAtKey = true;
+        flags.hasLookedAtKey = 1;
     }
-    else if(zorkUL.getRoom() == "key" && hasCode ) {
+    else if(zorkUL.getRoom() == "key" && flags.hasCode ) {
         ui->outputLabel->setText(QString::fromStdString("The Door clicked open,\nYou picked up the key"));
-        hasKey = true;
+        flags.hasKey = 1;
     }
-    else if(zorkUL.getRoom() == "Door" && !hasKey) {
+    else if(zorkUL.getRoom() == "Door" && !flags.hasKey) {
         ui->outputLabel->setText(QString::fromStdString("Its a large locked door\nTheres a slot for a key."));
 
     }
-    else if(zorkUL.getRoom() == "Door" && hasKey && !gameWon) {
+    else if(zorkUL.getRoom() == "Door" && flags.hasKey && !flags.gameWon) {
         ui->outputLabel->setText(QString::fromStdString("The Door swings open and you're free \n\nYou Win!"));
         QPixmap pic(":/resources/images/out.png");
+
         ui->image_label->setPixmap(pic);
         ui->pushButton_5->setText("End?");
-        gameWon = true;
+        flags.gameWon = 1;
     }
     else if(zorkUL.getRoom() == "North-West") {
         ui->outputLabel->setText(QString::fromStdString("There's a wrong way to spell colour?\n\n\nThe rest of the paper is incoherent scribbles."));
     }
-    else if(gameWon){
+    else if(zorkUL.getRoom() == "East") {
+         ui->outputLabel->setText(QString::fromStdString("Seriously turn around(West)"));
+    }
+    else if(zorkUL.getRoom() == "West") {
+        ui->outputLabel->setText(QString::fromStdString("Something about that mug.\n\nexit: East"));
+    }
+    else if(zorkUL.getRoom() == "North") {
+        ui->outputLabel->setText(QString::fromStdString("What a nice room."));
+    }
+    else if(zorkUL.getRoom() == "Centre") {
+         ui->outputLabel->setText(QString::fromStdString("There are doors in every direction\n\nThis must the the centre room."));
+    }
+    else if(zorkUL.getRoom() == "South") {
+         ui->outputLabel->setText(QString::fromStdString("There's nothing in the washing machines..\n\nWhy are they working?"));
+    }
+    else if(zorkUL.getRoom() == "Tunnel" && !flags.hasLookedAtButton) {
+        ui->outputLabel->setText(QString::fromStdString("You find two buttons in the dark..\n\nWhich to press"));
+        flags.hasLookedAtButton = true;
+        ui->dilemaButton1->setVisible(true);
+        ui->dilemaButton2->setVisible(true);
+
+    }
+    else if(zorkUL.getRoom() == "Tunnel" && flags.hasLookedAtButton) {
+        ui->outputLabel->setText(QString::fromStdString("Feels like someone's watching you."));
+    }
+    else if(flags.gameWon){
         exit(0);
     }
 }
+
+
 
 
 void MainWindow::on_lineEdit_textChanged(const QString &arg1)
@@ -155,40 +238,85 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 
     if(attempts > 5){
         ui->outputLabel->setText(QString::fromStdString("The keypad beeped unhappily.\n\nYou should try again."));
-        word = "CHIEF";
+        word = *ptr[1];
         ui->lineEdit->setVisible(false);
         return;
     }
     if(arg1.length() == 5) {
         string output = "Your guess: " + arg1.toUpper().toStdString() + "\n\n";
         string input = arg1.toUpper().toStdString();
-        wordleGameWon = true;
+        flags.wordleGameWon = true;
         for (int i = 0; i < 5; i++){
             if(input.at(i) == word.at(i)){ //checks if letter match letter in relative position
                 output += "Letter at Position " + std::to_string(i+1) + " is correct\n";
             } else if (word.find(input.at(i)) != std::string::npos) {//checks if letter is contained in word
                 output += "Letter at Position " + std::to_string(i+1) +  " is in incorrect position\n";
-                wordleGameWon = false;
+                flags.wordleGameWon = false;
             } else {
                 output += "Letter at Position " + std::to_string(i+1) + " not found\n";
-                wordleGameWon = false;
+                flags.wordleGameWon = false;
             }
 
         }
 
-        if(wordleGameWon){
+        if(flags.wordleGameWon){
             if(word == "COLOR"){
             output += "\nYou heard a click in the room with the safe.\n\n\nWhy does this room not have colour?";
             } else {
                 output += "\nYou heard a click in the room with the safe.\n\n\nWhat a terrible password.";
             }
             ui->lineEdit->setVisible(false);
-            hasCode = true;
+            flags.hasCode = 1;
         } else {
             attempts++;
             ui->lineEdit->setText(QString::fromStdString(""));
         }
         ui->outputLabel->setText(QString::fromStdString(output));
     }
+}
+
+template <typename T> //template class
+T dilemma(T x){
+    if(x){
+        word = *ptr[2];
+        return 0;
+    }else{
+        word = *ptr[3];
+        return 0;
+    }
+}
+
+
+void MainWindow::on_dilemaButton1_clicked()
+{
+    dilemma<int>(0);
+    ui->outputLabel->setText(QString::fromStdString("Passcode has changed.\n\nExit west."));
+    ui->dilemaButton1->setVisible(false);
+    ui->dilemaButton2->setVisible(false);
+}
+
+
+void MainWindow::on_dilemaButton2_clicked()
+{
+    dilemma<char>('c');
+    ui->outputLabel->setText(QString::fromStdString("Passcode has changed.\n\nExit west."));
+    ui->dilemaButton1->setVisible(false);
+    ui->dilemaButton2->setVisible(false);
+
+}
+
+
+
+
+
+void MainWindow::on_reset_clicked()
+{
+    flags = !flags;
+    zorkUL.resetRoom();
+    updateGraphics();
+    ui->lineEdit->setVisible(false);
+    ui->dilemaButton1->setVisible(false);
+    ui->dilemaButton2->setVisible(false);
+    ui->lineEdit->setText("");
 }
 

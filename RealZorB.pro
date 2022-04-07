@@ -11,12 +11,16 @@ CONFIG += c++11
 SOURCES += \
     Room.cpp \
     ZorkUL.cpp \
+    darkroom.cpp \
+    derived.cpp \
     item.cpp \
     mainwindow.cpp
 
 HEADERS += \
     Room.h \
     ZorkUL.h \
+    darkroom.h \
+    derived.h \
     item.h \
     mainwindow.h
 

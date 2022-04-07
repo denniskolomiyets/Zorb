@@ -28,8 +28,8 @@ public:
     void play();
     string goRoom(string dir);
     string go(string direction);
-
     string getRoom();
+    void resetRoom();
 };
 
 #endif /*ZORKUL_H_*/
